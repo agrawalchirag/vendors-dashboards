@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import Login from './containers/Login'
+import AppRouter from './router';
 
 class App extends Component {
   render() {
     return (
-      <Login />
+      <AppRouter />
     );
   }
 }
 
 export default App;
+
