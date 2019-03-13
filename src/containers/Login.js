@@ -49,11 +49,11 @@ const styles = {
 class Login extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFields(async (err, { email, password }) => {
+    this.props.form.validateFields(async (err, { username, password }) => {
       if (!err) {
         try {
-          const body = { email, password };
-          const headers = generateBasicAuthConfig(email, password);
+          const body = { username, password };
+          const headers = generateBasicAuthConfig(username, password);
 
           const { data } = await axios.post('/login', body, headers);
 
@@ -82,14 +82,14 @@ class Login extends React.Component {
           <Title style={styles.titleMain}>Login Form</Title>
           <Form onSubmit={this.handleSubmit}>
             <Form.Item style={styles.itemMain}>
-              {getFieldDecorator('email', {
-                rules: [{ required: true, message: 'Please input your email!' }],
+              {getFieldDecorator('username', {
+                rules: [{ required: true, message: 'Please input your username!' }],
               })(
                 <Input
                   prefix={<Icon type="mail" style={styles.iconMain} />}
                   style={styles.inputMain}
-                  type="email"
-                  placeholder="Email"
+                  type="text"
+                  placeholder="username"
                 />
               )}
             </Form.Item>

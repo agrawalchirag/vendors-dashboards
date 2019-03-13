@@ -1,11 +1,8 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Button, Col } from 'antd';
+import { Button } from 'antd';
 
 class PageHeader extends React.Component {
-  constructor(props) {
-    super(props)
-  };
 
   handleLogOut = () => {
     localStorage.removeItem('authToken');
@@ -17,18 +14,16 @@ class PageHeader extends React.Component {
     return (
       <Layout>
         <Header style={{ color: 'white', fontSize: '20px' }}>
-          <Col className="ant-col-xl-12">Vendors Dashboard</Col>
-          <Col style={{ textAlign: 'right' }} className="ant-col-xl-12">
+          Vendors Dashboard
             {localStorage.getItem('authToken') &&
-              <Button
-                type="primary ant-btn-round"
-                style={{ align: 'middle' }}
-                onClick={this.handleLogOut}
-              >
-                Log Out
-            </Button>
-            }
-          </Col>
+            <Button
+              style={{ float: "right", marginTop: "15px" }}
+              type="primary ant-btn-round"
+              onClick={this.handleLogOut}
+            >
+              Log Out
+                </Button>
+          }
         </Header>
       </Layout >
     );
