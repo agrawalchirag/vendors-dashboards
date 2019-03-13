@@ -8,8 +8,8 @@ import {
 } from 'antd';
 import Grid from 'antd/lib/card/Grid';
 import { withRouter } from 'react-router-dom';
-import Axios from 'axios';
 import { notification } from 'antd';
+import axios, { generateBasicAuthConfig } from '../utils/axios';
 
 const styles = {
   gridMain: {
@@ -49,15 +49,19 @@ const styles = {
 class Login extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFields(async (err, values) => {
+    this.props.form.validateFields(async (err, { email, password }) => {
       if (!err) {
         try {
-          const { data } = await Axios.post('http://localhost:5000/signIn', values)
-          if (!data.result._id) {
+          const body = { email, password };
+          const headers = generateBasicAuthConfig(email, password);
+
+          const { data } = await axios.post('/login', body, headers);
+
+          if (!data.token) {
             throw new Error("Cannot find User")
           }
-          const authToken = 'asdfghjklxcvbnmrtyuidfghjcvbnfghjk';
-          localStorage.setItem("authToken", authToken);
+
+          localStorage.setItem("authToken", data.token);
           this.props.history.push('/upload-image');
         } catch (error) {
           notification.open({
@@ -82,7 +86,7 @@ class Login extends React.Component {
                 rules: [{ required: true, message: 'Please input your email!' }],
               })(
                 <Input
-                  prefix={<Icon type="user" style={styles.iconMain} />}
+                  prefix={<Icon type="mail" style={styles.iconMain} />}
                   style={styles.inputMain}
                   type="email"
                   placeholder="Email"

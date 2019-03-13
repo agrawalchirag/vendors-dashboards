@@ -6,6 +6,7 @@ import { Button } from 'antd';
 import { Upload } from 'antd';
 import { Icon } from 'antd';
 import authUser from '../utils/authUser';
+import { getAuthorizationHeader } from '../utils/axios';
 
 const styles = {
   gridMain: {
@@ -88,6 +89,7 @@ class UploadImage extends React.Component {
   render() {
     const { fileList } = this.state;
     const { Title } = Typography;
+
     return (
       <Grid style={styles.gridMain}>
         <Row style={styles.rowMain} >
@@ -99,6 +101,7 @@ class UploadImage extends React.Component {
                   action="http://localhost:5000/invoice"
                   fileList={fileList}
                   name="invoice"
+                  headers={getAuthorizationHeader()}
                   onChange={this.handleChange}
                 >
                   {fileList.length
