@@ -1,52 +1,22 @@
 import React from 'react';
-import { Router, Route } from 'react-router-dom';
+import { Router as BrowserRouter, Route } from 'react-router-dom';
 import UploadImage from './containers/UploadImage';
 import createHistory from 'history/createBrowserHistory'
 import Login from './containers/Login'
-import { Layout } from 'antd';
-import { Button, Col } from 'antd';
+import PageHeader from './components/Header';
 
 const history = createHistory();
 
-const LogOutButton = ({ history }) => {
-  const handleLogOut = () => {
-    localStorage.removeItem('authToken');
-    history.push('/');
-  }
-  if (localStorage.getItem('authToken')) {
-    return (
-      <Button
-        type="primary ant-btn-round"
-        style={{ align: 'middle' }} ii
-        onClick={handleLogOut}
-      >
-        Log Out
-      </Button>
-    )
-  } else {
-    return null
-  }
-}
-
-function AppRouter() {
-  const { Header } = Layout;
+function Router() {
   return (
-    <Router history={history}>
+    <BrowserRouter history={history}>
       <div>
-        <Layout>
-          <Header style={{ color: 'white', fontSize: '20px' }}>
-            <Col className="ant-col-xl-12">Vendors Dashboard</Col>
-            <Col style={{ textAlign: 'right' }} className="ant-col-xl-12">
-              <LogOutButton history={history} />
-            </Col>
-          </Header>
-        </Layout>
+        <PageHeader history={history} />
         <Route path="/" exact component={Login} />
-        <Route path="/upload_image" exact component={UploadImage} />
+        <Route path="/upload-image" exact component={UploadImage} />
       </div>
-    </Router>
-
-  )
+    </BrowserRouter>
+  );
 }
 
-export default AppRouter;
+export default Router;

@@ -79,18 +79,15 @@ const styles = {
 };
 
 class UploadImage extends React.Component {
-
   state = {
     fileList: [],
   };
 
   handleChange = ({ fileList }) => this.setState({ fileList })
 
-  render() {  
-
+  render() {
     const { fileList } = this.state;
     const { Title } = Typography;
-
     return (
       <Grid style={styles.gridMain}>
         <Row style={styles.rowMain} >
@@ -127,7 +124,7 @@ class UploadImage extends React.Component {
             </Col>
           </Col>
         </Row>
-      </Grid >
+      </Grid>
     );
   }
 };

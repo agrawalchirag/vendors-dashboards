@@ -1,10 +1,15 @@
 import React from 'react';
 import {
-  Form, Icon, Input, Button, Typography,
+  Form,
+  Icon,
+  Input,
+  Button,
+  Typography,
 } from 'antd';
 import Grid from 'antd/lib/card/Grid';
 import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
+import { notification } from 'antd';
 
 const styles = {
   gridMain: {
@@ -41,9 +46,7 @@ const styles = {
   },
 };
 
-
 class Login extends React.Component {
-
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
@@ -55,10 +58,12 @@ class Login extends React.Component {
           }
           const authToken = 'asdfghjklxcvbnmrtyuidfghjcvbnfghjk';
           localStorage.setItem("authToken", authToken);
-          this.props.history.push('/upload_image');
-        }
-        catch (e) {
-          console.error(e);
+          this.props.history.push('/upload-image');
+        } catch (error) {
+          notification.open({
+            message: "Error",
+            description: "Invalid Email and Password",
+          });
         }
       }
     });
@@ -74,13 +79,13 @@ class Login extends React.Component {
           <Form onSubmit={this.handleSubmit}>
             <Form.Item style={styles.itemMain}>
               {getFieldDecorator('email', {
-                rules: [{ required: true, message: 'Please input your username!' }],
+                rules: [{ required: true, message: 'Please input your email!' }],
               })(
                 <Input
                   prefix={<Icon type="user" style={styles.iconMain} />}
                   style={styles.inputMain}
                   type="email"
-                  placeholder="Username"
+                  placeholder="Email"
                 />
               )}
             </Form.Item>
@@ -112,7 +117,6 @@ class Login extends React.Component {
   }
 };
 
-const WrappedLogin = Form.create({ name: 'register' })(Login);
+const formConnected = Form.create({ name: 'register' })(Login);
 
-export default withRouter(WrappedLogin);
-
+export default withRouter(formConnected);
