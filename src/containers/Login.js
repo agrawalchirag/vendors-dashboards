@@ -10,7 +10,7 @@ const styles = {
   gridMain: {
     backgroundColor: '#f1f1f1',
     height: '100vh',
-    padding: '13%'
+    padding: '13%',
   },
   gridSecond: {
     backgroundColor: 'white',
@@ -37,7 +37,7 @@ const styles = {
     color: 'rgba(0,0,0,.25)',
   },
   buttonMain: {
-    align: 'middle'
+    align: 'middle',
   },
 };
 
@@ -53,6 +53,8 @@ class Login extends React.Component {
           if (!data.result._id) {
             throw new Error("Cannot find User")
           }
+          const authToken = 'asdfghjklxcvbnmrtyuidfghjcvbnfghjk';
+          localStorage.setItem("authToken", authToken);
           this.props.history.push('/upload_image');
         }
         catch (e) {
@@ -60,7 +62,6 @@ class Login extends React.Component {
         }
       }
     });
-
   }
 
   render() {
@@ -109,7 +110,7 @@ class Login extends React.Component {
       </Grid>
     );
   }
-}
+};
 
 const WrappedLogin = Form.create({ name: 'register' })(Login);
 
