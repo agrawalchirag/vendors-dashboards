@@ -5,6 +5,7 @@ import { Typography } from 'antd';
 import { Button } from 'antd';
 import { Upload } from 'antd';
 import { Icon } from 'antd';
+import authUser from '../utils/authUser';
 
 const styles = {
   gridMain: {
@@ -25,7 +26,7 @@ const styles = {
     width: 800,
     height: '50vh',
     margin: '0 auto',
-    boxShadow: '-2px 1px 23px #ccc'
+    boxShadow: '-2px 1px 23px #ccc',
   },
   columnSecond: {
     textAlign: 'center',
@@ -70,7 +71,7 @@ const styles = {
     fontSize: 20,
   },
   imgMain: {
-    width: "100%"
+    width: "100%",
   },
   titleThird: {
     color: '#f1f1f1',
@@ -85,7 +86,7 @@ class UploadImage extends React.Component {
 
   handleChange = ({ fileList }) => this.setState({ fileList })
 
-  render() {
+  render() {  
 
     const { fileList } = this.state;
     const { Title } = Typography;
@@ -129,6 +130,6 @@ class UploadImage extends React.Component {
       </Grid >
     );
   }
-}
+};
 
-export default UploadImage;
+export default authUser(UploadImage);
