@@ -98,9 +98,9 @@ class UploadImage extends React.Component {
               <Grid style={styles.gridSecond}>
                 <Title style={styles.titleMain}>Upload Your Invoice</Title>
                 <Upload
-                  action="http://localhost:5000/invoice"
+                  action="http://localhost:5000/upload"
                   fileList={fileList}
-                  name="invoice"
+                  name="image"
                   headers={getAuthorizationHeader()}
                   onChange={this.handleChange}
                 >
