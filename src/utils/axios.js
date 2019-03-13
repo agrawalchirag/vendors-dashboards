@@ -9,7 +9,7 @@ export const generateBasicAuthConfig = (username, password) => ({
 
 export const getAuthorizationHeader = () => ({
   Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-});
+});   
 
 let axios = Axios.create({
   baseURL: 'http://localhost:5000',

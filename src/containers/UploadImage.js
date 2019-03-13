@@ -7,6 +7,7 @@ import { Upload } from 'antd';
 import { Icon } from 'antd';
 import authUser from '../utils/authUser';
 import { getAuthorizationHeader } from '../utils/axios';
+import axios from '../utils/axios';
 
 const styles = {
   gridMain: {
@@ -82,9 +83,27 @@ const styles = {
 class UploadImage extends React.Component {
   state = {
     fileList: [],
+    previewData: undefined,
   };
 
-  handleChange = ({ fileList }) => this.setState({ fileList })
+  handleChange = ({ fileList }) => {
+    this.setState({ fileList })
+    const headers = getAuthorizationHeader();
+    setTimeout(async () => {
+      if (this.state.fileList.length) {
+        const { data } = await axios.get('/image', { headers });
+        this.setState({
+          previewData: `data:${fileList[0].type};base64, ${data}`,
+        });
+      }
+    }, 1000);
+  }
+
+  onBeforeUpload = () => {
+    this.setState({
+      previewData: undefined,
+    });
+  }
 
   render() {
     const { fileList } = this.state;
@@ -103,6 +122,7 @@ class UploadImage extends React.Component {
                   name="image"
                   headers={getAuthorizationHeader()}
                   onChange={this.handleChange}
+                  beforeUpload={this.onBeforeUpload}
                 >
                   {fileList.length
                     ? null
@@ -120,7 +140,7 @@ class UploadImage extends React.Component {
             <Col span={12} style={styles.columnThird}>
               <Grid>
                 {fileList.length && fileList[0].response
-                  ? <img src={fileList[0].response.fileUrl} style={styles.imgMain} />
+                  ? <img src={this.state.previewData || ''} style={styles.imgMain} />
                   : <Title level={3} style={styles.titleThird}>Preview Image</Title>
                 }
               </Grid>
